@@ -81,6 +81,9 @@ export default function MasterDemographicsPage() {
                     32.0%
                   </div>
                 </div>
+                <p className="text-xs mt-4 text-muted-foreground">
+                  Total Tickets Sold
+                </p>
               </CardContent>
             </Card>
             <Card>
@@ -96,6 +99,9 @@ export default function MasterDemographicsPage() {
                     17.0%
                   </div>
                 </div>
+                <p className="text-xs mt-4 text-muted-foreground">
+                  Total Tickets Sold
+                </p>
               </CardContent>
             </Card>
             <Card>
@@ -111,6 +117,9 @@ export default function MasterDemographicsPage() {
                     91.0%
                   </div>
                 </div>
+                <p className="text-xs mt-4 text-muted-foreground">
+                  Total Tickets Sold
+                </p>
               </CardContent>
             </Card>
             <Card>
@@ -126,6 +135,9 @@ export default function MasterDemographicsPage() {
                     97.0%
                   </div>
                 </div>
+                <p className="text-xs mt-4 text-muted-foreground">
+                  Total Tickets Sold
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -197,7 +209,7 @@ export default function MasterDemographicsPage() {
               <CardContent className="flex-1 pb-0">
                 <ChartContainer
                   config={chartConfig2}
-                  className="mx-auto aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground"
+                  className=" mt-4 mx-auto aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground"
                 >
                   <PieChart>
                     <ChartTooltip content={<ChartTooltipContent hideLabel />} />
