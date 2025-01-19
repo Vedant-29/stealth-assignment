@@ -28,9 +28,9 @@
 
 All pages and components are designed to be **fully responsive**. On mobile devices, the layout adapts and remains easy to navigate. We will also include multiple screenshots of how the UI looks in **phone mode** (e.g., iPhone, Android) so users can see it in action:
 - **Mobile-friendly** layout with collapsible menus  
-![alt text](image.png) ![alt text](image-1.png) ![alt text](image-2.png) ![alt text](image-3.png)
+![alt text](./public/image-6.png) ![alt text](./public/image-1.png) ![alt text](./public/image-2.png) ![alt text](./public/image-3.png)
 - **Adaptive** charts that resize to fit smaller screens  
-![alt text](image-4.png) ![alt text](image-5.png)
+![alt text](./public/image-4.png) ![alt text](./public/image-5.png)
 
 ---
 
