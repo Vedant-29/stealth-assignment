@@ -19,7 +19,7 @@
    - Clear, responsive card layout  
 
 3. **Previous Test Runs Page**  
-   ![alt text](image3.png)
+   ![alt text](./public/image3.png)
    A detailed table listing past tests, including run dates, durations, and descriptions of the test conditions. This allows users to see historical changes in model performance over time.  
 
 ---
@@ -30,9 +30,12 @@ All pages and components are designed to be **fully responsive**. On mobile devi
 - **Mobile-friendly** layout with collapsible menus  
 ![alt text](image.png) ![alt text](image-1.png) ![alt text](image-2.png) ![alt text](image-3.png)
 - **Adaptive** charts that resize to fit smaller screens  
-
-Stay tuned for updates with more **phone mode** images under this section.
 ![alt text](image-4.png) ![alt text](image-5.png)
+
+## Vercel Deployment
+
+You can view the live deployment of this project on Vercel. Click the link below to explore the application:
+- [BreakYourLLM on Vercel](https://stealth-assignment-48cs.vercel.app/)
 ---
 
 ## Installation & Getting Started
@@ -41,5 +44,5 @@ Follow these steps to run **BreakYourLLM** locally:
 
 1. **Clone this repository**:
    ```bash
-   git clone https://github.com/your-username/BreakYourLLM.git
-   cd BreakYourLLM
+   git clone https://github.com/Vedant-29/stealth-assignment.git
+   cd stealth-assignment
