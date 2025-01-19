@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import {
   Table,
@@ -12,7 +11,6 @@ import {
   TableHead,
   TableCell,
 } from "@/components/ui/table";
-import { Label } from "@radix-ui/react-dropdown-menu";
 
 export default function MasterDemographicsSkeleton() {
   return (
