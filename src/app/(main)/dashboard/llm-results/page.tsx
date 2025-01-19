@@ -68,7 +68,7 @@ const chartConfig3 = {
   },
   user2: {
     label: "cd0810cc",
-    color: "hsl(var(--chart-5))",
+    color: "hsl(var(--chart-2))",
   },
   user3: {
     label: "cd0810cc",

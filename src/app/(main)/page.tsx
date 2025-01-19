@@ -13,11 +13,11 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center mb-6">
           <div>Welcome to</div>
           <div className="scroll-m-20 md:text-6xl text-4xl font-extrabold tracking-tight lg:text-7xl text-foreground">
-            BreakYour<span className="text-red-500">LLM</span>
+            BreakYour<span className="text-blue-500">LLM</span>
           </div>
         </div>
 
-        <button onClick={() => router.push('dashboard/llm-results')} className="cursor-pointer group inline-flex items-center justify-center gap-3 bg-red-600 text-white font-bold rounded-lg py-2 px-6 text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg border border-red-300 hover:border-red-500 transform hover:translate-y-1 hover:rotate-1">
+        <button onClick={() => router.push('dashboard/llm-results')} className="cursor-pointer group inline-flex items-center justify-center gap-3 bg-blue-600 text-white font-bold rounded-lg py-2 px-6 text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg border border-blue-300 hover:border-blue-500 transform hover:translate-y-1 hover:rotate-1">
           View Dashboard
         </button>
       </div>

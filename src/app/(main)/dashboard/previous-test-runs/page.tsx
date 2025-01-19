@@ -104,10 +104,6 @@ export const columns: ColumnDef<PreviousTestRun>[] = [
         day: "numeric",
         month: "long",
         year: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-        hour12: true,
         timeZone: "Asia/Kolkata",
       });
       return <div>{formattedDate || "N/A"}</div>;
