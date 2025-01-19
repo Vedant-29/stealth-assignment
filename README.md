@@ -32,6 +32,8 @@ All pages and components are designed to be **fully responsive**. On mobile devi
 - **Adaptive** charts that resize to fit smaller screens  
 ![alt text](image-4.png) ![alt text](image-5.png)
 
+---
+
 ## Vercel Deployment
 
 You can view the live deployment of this project on Vercel. Click the link below to explore the application:
