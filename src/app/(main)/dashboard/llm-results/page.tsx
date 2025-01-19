@@ -1,7 +1,7 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { CreditCard, DollarSign, TrendingUp } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Area, AreaChart, CartesianGrid, Label, Pie, PieChart, XAxis } from "recharts";
 import {
   ChartConfig,
@@ -11,16 +11,36 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { browser: "cd0810cc", visitors: 81.9, fill: "var(--color-chrome)" },
-  { browser: "cd0810cc", visitors: 19.1, fill: "var(--color-edge)" },
-];
+import LLMResultsSkeleton from "@/components/llm-results-skeleton";
 
-const chartData2 = [
-  { browser: "cd0810cc", visitors: 85, fill: "var(--color-chrome)" },
-  { browser: "cd0810cc", visitors: 75, fill: "var(--color-safari)" },
-  { browser: "cd0810cc", visitors: 20, fill: "var(--color-firefox)" },
-]
+
+type ChartData = {
+  browser: string;
+  visitors: number;
+  fill: string;
+};
+
+type ChartData3 = {
+  question_number: number;
+  user1: number;
+  user2: number;
+  user3: number;
+};
+
+const chartConfig = {
+  visitors: {
+    label: "Visitors",
+  },
+  chrome: {
+    label: "Chrome",
+    color: "hsl(var(--chart-1))",
+  },
+  edge: {
+    label: "Edge",
+    color: "hsl(var(--chart-4))",
+  },
+} satisfies ChartConfig;
+
 
 const chartConfig2 = {
   visitors: {
@@ -48,29 +68,6 @@ const chartConfig2 = {
   },
 } satisfies ChartConfig;
 
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Chrome",
-    color: "hsl(var(--chart-1))",
-  },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-} satisfies ChartConfig;
-
-
-const chartData3 = [
-  { question_number: 1, user1: 80, user2: 90, user3: 30 },
-  { question_number: 2, user1: 95, user2: 85, user3: 85 },
-  { question_number: 3, user1: 70, user2: 75, user3: 65 },
-  { question_number: 4, user1: 85, user2: 90, user3: 75 },
-  { question_number: 5, user1: 90, user2: 80, user3: 85 },
-];
-
 const chartConfig3 = {
   user1: {
     label: "cd0810cc",
@@ -86,7 +83,61 @@ const chartConfig3 = {
   },
 };
 
+
+const chartData3 = [
+  { question_number: 1, user1: 80, user2: 90, user3: 30 },
+  { question_number: 2, user1: 95, user2: 85, user3: 85 },
+  { question_number: 3, user1: 70, user2: 75, user3: 65 },
+  { question_number: 4, user1: 85, user2: 90, user3: 75 },
+  { question_number: 5, user1: 90, user2: 80, user3: 85 },
+];
+
+
 export default function MasterDemographicsPage() {
+  const [hallucinationRate, setHallucinationRate] = useState<number>(0);
+  const [llmDriftRate, setLlmDriftRate] = useState<number>(0);
+  const [customMetric1, setCustomMetric1] = useState<number>(0);
+  const [customMetric2, setCustomMetric2] = useState<number>(0);
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+
+  const [chartData, setChartData] = useState<ChartData[]>([]);
+  const [chartData2, setChartData2] = useState<ChartData[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/api/llm-results');
+        const data = await response.json();
+
+        setHallucinationRate(data.data.hallucination_rate);
+        setLlmDriftRate(data.data.llm_drift_rate);
+        setCustomMetric1(data.data.custom_metrics.custom_metric_1);
+        setCustomMetric2(data.data.custom_metrics.custom_metric_2);
+
+        setChartData([
+          { browser: "cd0810cc", visitors: data.data.accuracy, fill: "var(--color-chrome)" },
+          { browser: "cd0810cc", visitors: 100 - data.data.accuracy, fill: "var(--color-edge)" },
+        ]);
+        setChartData2([
+          { browser: data.data.file_accuracy_comparison.files[0].name, visitors: data.data.file_accuracy_comparison.files[0].accuracy, fill: "var(--color-chrome)" },
+          { browser: data.data.file_accuracy_comparison.files[1].name, visitors: data.data.file_accuracy_comparison.files[1].accuracy, fill: "var(--color-safari)" },
+          { browser: data.data.file_accuracy_comparison.files[2].name, visitors: data.data.file_accuracy_comparison.files[2].accuracy, fill: "var(--color-firefox)" },
+        ]);
+      } catch (error) {
+        console.error('Error fetching LLM results:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <LLMResultsSkeleton />;
+  }
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -104,7 +155,7 @@ export default function MasterDemographicsPage() {
               <CardContent>
                 <div className="flex items-center justify-between mt-2">
                   <div className="text-5xl font-bold">
-                    32.0%
+                    {hallucinationRate.toFixed(2)}%
                   </div>
                 </div>
                 <p className="text-xs mt-4 text-muted-foreground">
@@ -122,7 +173,7 @@ export default function MasterDemographicsPage() {
               <CardContent>
                 <div className="flex items-center justify-between mt-2">
                   <div className="text-5xl font-bold">
-                    17.0%
+                    {llmDriftRate.toFixed(2)}%
                   </div>
                 </div>
                 <p className="text-xs mt-4 text-muted-foreground">
@@ -140,7 +191,7 @@ export default function MasterDemographicsPage() {
               <CardContent>
                 <div className="flex items-center justify-between mt-2">
                   <div className="text-5xl font-bold">
-                    91.0%
+                    {customMetric1.toFixed(2)}%
                   </div>
                 </div>
                 <p className="text-xs mt-4 text-muted-foreground">
@@ -158,7 +209,7 @@ export default function MasterDemographicsPage() {
               <CardContent>
                 <div className="flex items-center justify-between mt-2">
                   <div className="text-5xl font-bold">
-                    97.0%
+                    {customMetric2.toFixed(2)}%
                   </div>
                 </div>
                 <p className="text-xs mt-4 text-muted-foreground">
@@ -287,14 +338,14 @@ export default function MasterDemographicsPage() {
                   axisLine={false}
                   tickMargin={8}
                   minTickGap={32}
-                  tickFormatter={(value) => `Question ${value}`} // Formats X-axis ticks
+                  tickFormatter={(value) => `Question ${value}`}
                 />
                 <ChartTooltip
                   cursor={false}
 
                   content={
                     <ChartTooltipContent
-                      labelFormatter={(value) => `Question`} // Formats X-axis ticks
+                      labelFormatter={(value) => `Question`} 
                       indicator="dot"
                     />
                   }
