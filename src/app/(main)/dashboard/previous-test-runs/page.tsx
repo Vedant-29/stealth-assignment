@@ -87,18 +87,32 @@ export const columns: ColumnDef<PreviousTestRun>[] = [
   },
   {
     accessorKey: "run_date",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Run Date
-          <ArrowUpDown />
-        </Button>
-      )
+    header: ({ column }: { column: any }) => (
+      <Button
+        variant="ghost"
+        className="px-0"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Run Date
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }: { row: any }) => {
+      const dateString = row.getValue("run_date");
+      const date = new Date(dateString);
+      const formattedDate = date.toLocaleString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+        timeZone: "Asia/Kolkata",
+      });
+      return <div>{formattedDate || "N/A"}</div>;
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("run_date")}</div>,
+    enableSorting: true,
   },
   {
     accessorKey: "run_time",
