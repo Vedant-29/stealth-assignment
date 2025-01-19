@@ -1,6 +1,6 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { CreditCard, DollarSign, TrendingUp } from "lucide-react";
+import { DollarSign} from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Area, AreaChart, CartesianGrid, Label, Pie, PieChart, XAxis } from "recharts";
 import {
@@ -18,13 +18,6 @@ type ChartData = {
   browser: string;
   visitors: number;
   fill: string;
-};
-
-type ChartData3 = {
-  question_number: number;
-  user1: number;
-  user2: number;
-  user3: number;
 };
 
 const chartConfig = {

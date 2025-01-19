@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -12,19 +12,9 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, ChevronDownIcon, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -34,50 +24,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader} from "@/components/ui/card";
 import { Label } from "@radix-ui/react-dropdown-menu";
-
-
-const data: PreviousTestRun[] = [
-  {
-    uuid: "cd0810cc-3ab8-4d0e-80c2-06f160f502f6",
-    project_name: "medLLM",
-    run_date: "2024-12-01",
-    run_time: "00:00:00",
-    run_by: "John Doe",
-    run_duration: "0",
-    description: "This dataset contains the test cases for evaluating the responses of a medical chatbot regarding the dosing of Eliquis for DVT/PE.",
-  },
-  {
-    uuid: "cd0810cc-3ab8-4d0e-80c2-06f160f502f9",
-    project_name: "medLLM",
-    run_date: "2024-12-07",
-    run_time: "09:17:37",
-    run_by: "John Doe",
-    run_duration: "0",
-    description: "This dataset contains the test cases for evaluating the responses of a medical chatbot regarding the dosing of Eliquis for DVT/PE.",
-  },
-  {
-    uuid: "cd0810cc-3ab8-4d0e-80c2-06f160f502f7",
-    project_name: "medLLM",
-    run_date: "2024-12-06",
-    run_time: "21:27:17",
-    run_by: "John Doe",
-    run_duration: "0",
-    description: "This dataset contains the test cases for evaluating the responses of a medical chatbot regarding the dosing of Eliquis for DVT/PE.",
-  },
-];
-
-const data2: TestResults[] = [
-  {
-    case: 1,
-    response: "The response provides general information about Eliquis dosage but does not specify the standard dosage for adults. It mentions that the dosage is determined by a doctor and varies based on the condition being treated, but it does not provide specific standard dosages for adults."
-  },
-  {
-    case: 2,
-    response: "The response does not specify the standard dosage of Eliquis for children. It only mentions the typical dosages and uses for adults, and it does not address pediatric dosing specifically."
-  },
-];
+import PreviousTestRunsSkeleton from "@/components/previous-test-runs-skeleton";
 
 export type TestResults = {
   case: number;
@@ -171,6 +120,29 @@ export default function MasterDemographicsPage() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const [data, setData] = useState<PreviousTestRun[]>([]);
+  const [data2, setData2] = useState<TestResults[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/api/llm-results');
+        const data = await response.json();
+
+        setData(data.data.previous_test_runs);
+        setData2(data.data.test_results.test_cases[0][0]);
+
+      } catch (error) {
+        console.error('Error fetching LLM results:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const table = useReactTable({
     data,
@@ -209,6 +181,10 @@ export default function MasterDemographicsPage() {
       rowSelection,
     },
   });
+
+  if (isLoading) {
+    return <PreviousTestRunsSkeleton />;
+  }
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -287,55 +263,55 @@ export default function MasterDemographicsPage() {
               <div className="grid gap-3">
                 <Label className="text-sm font-medium">What is the recommended dosage for Eliquis?</Label>
                 <div className="rounded-md border">
-            <Table>
-              <TableHeader>
-                {table2.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead key={header.id}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                        </TableHead>
-                      );
-                    })}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody>
-                {table2.getRowModel().rows?.length ? (
-                  table2.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
+                  <Table>
+                    <TableHeader>
+                      {table2.getHeaderGroups().map((headerGroup) => (
+                        <TableRow key={headerGroup.id}>
+                          {headerGroup.headers.map((header) => {
+                            return (
+                              <TableHead key={header.id}>
+                                {header.isPlaceholder
+                                  ? null
+                                  : flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
+                                  )}
+                              </TableHead>
+                            );
+                          })}
+                        </TableRow>
                       ))}
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className="h-24 text-center"
-                    >
-                      No results.
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
+                    </TableHeader>
+                    <TableBody>
+                      {table2.getRowModel().rows?.length ? (
+                        table2.getRowModel().rows.map((row) => (
+                          <TableRow
+                            key={row.id}
+                            data-state={row.getIsSelected() && "selected"}
+                          >
+                            {row.getVisibleCells().map((cell) => (
+                              <TableCell key={cell.id}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext()
+                                )}
+                              </TableCell>
+                            ))}
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell
+                            colSpan={columns.length}
+                            className="h-24 text-center"
+                          >
+                            No results.
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
               </div>
             </CardHeader>
           </Card>
