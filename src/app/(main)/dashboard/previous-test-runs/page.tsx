@@ -30,12 +30,12 @@ import { Card, CardHeader} from "@/components/ui/card";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import PreviousTestRunsSkeleton from "@/components/previous-test-runs-skeleton";
 
-export type TestResults = {
+type TestResults = {
   case: number;
   response: string;
 }
 
-export type PreviousTestRun = {
+type PreviousTestRun = {
   uuid: string;
   project_name: string;
   run_date: string;
@@ -45,7 +45,7 @@ export type PreviousTestRun = {
   description: string;
 };
 
-export const columns2: ColumnDef<TestResults>[] = [
+const columns2: ColumnDef<TestResults>[] = [
   {
     accessorKey: "case",
     header: "Case",
@@ -58,7 +58,7 @@ export const columns2: ColumnDef<TestResults>[] = [
   },
 ];
 
-export const columns: ColumnDef<PreviousTestRun>[] = [
+const columns: ColumnDef<PreviousTestRun>[] = [
   {
     accessorKey: "uuid",
     header: "UUID",

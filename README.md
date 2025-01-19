@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BreakYourLLM
 
-## Getting Started
+**BreakYourLLM** is a Next.js project focused on stress-testing language models (LLMs). It includes several pages that allow users to explore test results, view previous runs, and interact with the system. The goal is to demonstrate how LLM output can be evaluated, tested, and displayed in a structured, user-friendly UI.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Home Page**  
+   ![alt text](./public/image.png)
+   The home page provides a quick introduction and links to important sections of the project.  
+   - Simple navigation towards LLM Results and Previous Test Runs
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. **LLM Results Page**  
+   ![alt text](./public/image2.png)
+   This page displays various metrics related to LLM performance, including accuracy, hallucination rate, drift rate, and custom metrics.  
+   - Interactive charts  
+   - Automatically fetched data  
+   - Clear, responsive card layout  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Previous Test Runs Page**  
+   ![alt text](image3.png)
+   A detailed table listing past tests, including run dates, durations, and descriptions of the test conditions. This allows users to see historical changes in model performance over time.  
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Responsive Design
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+All pages and components are designed to be **fully responsive**. On mobile devices, the layout adapts and remains easy to navigate. We will also include multiple screenshots of how the UI looks in **phone mode** (e.g., iPhone, Android) so users can see it in action:
+- **Mobile-friendly** layout with collapsible menus  
+![alt text](image.png) ![alt text](image-1.png) ![alt text](image-2.png) ![alt text](image-3.png)
+- **Adaptive** charts that resize to fit smaller screens  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Stay tuned for updates with more **phone mode** images under this section.
+![alt text](image-4.png) ![alt text](image-5.png)
+---
 
-## Deploy on Vercel
+## Installation & Getting Started
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Follow these steps to run **BreakYourLLM** locally:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Clone this repository**:
+   ```bash
+   git clone https://github.com/your-username/BreakYourLLM.git
+   cd BreakYourLLM
