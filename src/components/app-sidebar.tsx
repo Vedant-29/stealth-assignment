@@ -33,8 +33,8 @@ const data = {
           url: "/dashboard/llm-results",
         },
         {
-          title: "Test Results",
-          url: "/dashboard/test-results",
+          title: "Previous Test Runs",
+          url: "/dashboard/previous-test-runs",
         },
       ],
     },

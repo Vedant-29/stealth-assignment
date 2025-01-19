@@ -21,8 +21,8 @@ const navigationItems = [
     label: "LLM Results",
   },
   {
-    href: "/dashboard/test-results",
-    label: "Test Results",
+    href: "/dashboard/previous-test-runs",
+    label: "Previous Test Runs",
   },
 ]
 
